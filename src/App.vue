@@ -10,7 +10,7 @@
       <v-container>
         <v-layout v-if="!loading">
           <v-row class="mb-6">
-            <v-col v-for="(flat, index) in flats" :key="index" cols="3">
+            <v-col v-for="flat in flats" :key="flat.id" cols="3">
               <flat-card :flat="flat"/>
             </v-col>
           </v-row>
@@ -43,21 +43,33 @@ export default {
     applyFilters(filters) {
       this.filterData(filters)
     },
-    getFlats() {
-      this.loading = true
-      setTimeout(() => {
-          this.flats = FLATS_DATA
+    async getFlats() {
+      try {
+        this.loading = true
+        this.flats = await new Promise((resolve) => {
+          setTimeout(() => {
+            resolve(FLATS_DATA)
+          }, 1000)
+        })
+      } finally {
         this.loading = false
-      }, 1000)
+      }
+
+
     },
-    filterData(filters) {
-      this.loading = true
+    async filterData(filters) {
+      try {
+        this.loading = true
 
-      setTimeout(() => {
-        this.flats = FLATS_DATA.filter(flat => this.getConditionFilter(flat, filters))
-
+        this.flats = await new Promise((resolve) => {
+          setTimeout(() => {
+            const result = FLATS_DATA.filter(flat => this.getConditionFilter(flat, filters))
+            resolve(result)
+          }, 1000)
+        })
+      } finally {
         this.loading = false
-      }, 1000)
+      }
     },
     getConditionFilter(flat, filters) {
       return !Object.entries(filters).some(([key, value]) => {
@@ -129,7 +141,7 @@ const FLATS_DATA = [
     building_id: 75,
     building_name: "1 этап 1а корпуса",
     floor: 4,
-    id: 20332,
+    id: 203321,
     is_studio: 1,
     number: "163",
     plan: "/img/bb8d/9eeb90d9c7aeeed41fb41c0b5e383013.jpg",
@@ -143,7 +155,7 @@ const FLATS_DATA = [
     building_id: 32,
     building_name: "1 этап 1а корпуса",
     floor: 10,
-    id: 20328,
+    id: 203282,
     is_studio: 1,
     number: "163",
     plan: "/img/bb8d/9eeb90d9c7aeeed41fb41c0b5e383013.jpg",
@@ -199,7 +211,7 @@ const FLATS_DATA = [
     building_id: 73,
     building_name: "1 этап 1а корпуса",
     floor: 10,
-    id: 23329,
+    id: 233291,
     is_studio: 1,
     number: "163",
     plan: "/img/bb8d/9eeb90d9c7aeeed41fb41c0b5e383013.jpg",
@@ -213,7 +225,7 @@ const FLATS_DATA = [
     building_id: 74,
     building_name: "1 этап 1а корпуса",
     floor: 4,
-    id: 20822,
+    id: 208221,
     is_studio: 1,
     number: "163",
     plan: "/img/bb8d/9eeb90d9c7aeeed41fb41c0b5e383013.jpg",
@@ -227,7 +239,7 @@ const FLATS_DATA = [
     building_id: 75,
     building_name: "1 этап 1а корпуса",
     floor: 4,
-    id: 20382,
+    id: 203821,
     is_studio: 1,
     number: "163",
     plan: "/img/bb8d/9eeb90d9c7aeeed41fb41c0b5e383013.jpg",
@@ -241,7 +253,7 @@ const FLATS_DATA = [
     building_id: 75,
     building_name: "1 этап 1а корпуса",
     floor: 4,
-    id: 20332,
+    id: 203322,
     is_studio: 1,
     number: "163",
     plan: "/img/bb8d/9eeb90d9c7aeeed41fb41c0b5e383013.jpg",
@@ -255,7 +267,7 @@ const FLATS_DATA = [
     building_id: 32,
     building_name: "1 этап 1а корпуса",
     floor: 10,
-    id: 20328,
+    id: 203283,
     is_studio: 1,
     number: "163",
     plan: "/img/bb8d/9eeb90d9c7aeeed41fb41c0b5e383013.jpg",
@@ -311,7 +323,7 @@ const FLATS_DATA = [
     building_id: 73,
     building_name: "1 этап 1а корпуса",
     floor: 10,
-    id: 23329,
+    id: 233292,
     is_studio: 1,
     number: "163",
     plan: "/img/bb8d/9eeb90d9c7aeeed41fb41c0b5e383013.jpg",
@@ -325,7 +337,7 @@ const FLATS_DATA = [
     building_id: 74,
     building_name: "1 этап 1а корпуса",
     floor: 4,
-    id: 20822,
+    id: 208222,
     is_studio: 1,
     number: "163",
     plan: "/img/bb8d/9eeb90d9c7aeeed41fb41c0b5e383013.jpg",
@@ -339,7 +351,7 @@ const FLATS_DATA = [
     building_id: 75,
     building_name: "1 этап 1а корпуса",
     floor: 4,
-    id: 20382,
+    id: 203822,
     is_studio: 1,
     number: "163",
     plan: "/img/bb8d/9eeb90d9c7aeeed41fb41c0b5e383013.jpg",
@@ -353,7 +365,7 @@ const FLATS_DATA = [
     building_id: 75,
     building_name: "1 этап 1а корпуса",
     floor: 4,
-    id: 20332,
+    id: 203323,
     is_studio: 1,
     number: "163",
     plan: "/img/bb8d/9eeb90d9c7aeeed41fb41c0b5e383013.jpg",
@@ -367,7 +379,7 @@ const FLATS_DATA = [
     building_id: 32,
     building_name: "1 этап 1а корпуса",
     floor: 10,
-    id: 20328,
+    id: 203284,
     is_studio: 1,
     number: "163",
     plan: "/img/bb8d/9eeb90d9c7aeeed41fb41c0b5e383013.jpg",
@@ -423,7 +435,7 @@ const FLATS_DATA = [
     building_id: 73,
     building_name: "1 этап 1а корпуса",
     floor: 10,
-    id: 23329,
+    id: 233293,
     is_studio: 1,
     number: "163",
     plan: "/img/bb8d/9eeb90d9c7aeeed41fb41c0b5e383013.jpg",
@@ -437,7 +449,7 @@ const FLATS_DATA = [
     building_id: 74,
     building_name: "1 этап 1а корпуса",
     floor: 4,
-    id: 20822,
+    id: 208223,
     is_studio: 1,
     number: "163",
     plan: "/img/bb8d/9eeb90d9c7aeeed41fb41c0b5e383013.jpg",
@@ -451,7 +463,7 @@ const FLATS_DATA = [
     building_id: 75,
     building_name: "1 этап 1а корпуса",
     floor: 4,
-    id: 20382,
+    id: 203823,
     is_studio: 1,
     number: "163",
     plan: "/img/bb8d/9eeb90d9c7aeeed41fb41c0b5e383013.jpg",
@@ -465,7 +477,7 @@ const FLATS_DATA = [
     building_id: 75,
     building_name: "1 этап 1а корпуса",
     floor: 4,
-    id: 20332,
+    id: 203324,
     is_studio: 1,
     number: "163",
     plan: "/img/bb8d/9eeb90d9c7aeeed41fb41c0b5e383013.jpg",
@@ -479,7 +491,7 @@ const FLATS_DATA = [
     building_id: 32,
     building_name: "1 этап 1а корпуса",
     floor: 10,
-    id: 20328,
+    id: 203281,
     is_studio: 1,
     number: "163",
     plan: "/img/bb8d/9eeb90d9c7aeeed41fb41c0b5e383013.jpg",

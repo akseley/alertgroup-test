@@ -3,25 +3,25 @@
     <div>{{title}}</div>
     <div style="display: flex">
       <v-text-field
+          v-model="currentRange[0]"
+          :max="max"
+          :min="min"
           class="pa-0 mr-3"
           dense
           outlined
-          v-model="currentRange[0]"
           hide-details
           type="number"
-          :max="max"
-          :min="min"
           style="width: 60px"
       />
       <v-text-field
+          v-model="currentRange[1]"
+          :max="max"
+          :min="min"
           outlined
           dense
           class="pa-0 ma-0"
-          v-model="currentRange[1]"
           hide-details
           type="number"
-          :max="max"
-          :min="min"
           style="width: 60px"
       />
     </div>
@@ -44,7 +44,6 @@ export default {
   model: {
     prop: 'range',
     event: 'change'
-
   },
 
   props: {

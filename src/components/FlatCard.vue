@@ -12,7 +12,7 @@
           </div>
           <div class="card-price">
             <div class="text-h6 font-weight-bold">{{ formatPrice(flat.price) }}р.</div>
-            <div class="card-subprice grey--text caption">{{ calcPerMeter() }}р. за м<sup>2</sup></div>
+            <div class="card-subprice grey--text caption">{{ calcPerMeter }}р. за м<sup>2</sup></div>
           </div>
           <div class="card-actions">
           <v-btn color="green lighten-2 white--text" block>Подробнее</v-btn>
@@ -36,15 +36,15 @@ export default {
   computed: {
     img() {
       return this.flat.image ?? img
+    },
+    calcPerMeter() {
+      const result = Math.floor(this.flat.price / this.flat.square)
+      return this.formatPrice(result)
     }
   },
   methods: {
     formatPrice(price) {
       return (price).toLocaleString('ru-RU')
-    },
-    calcPerMeter() {
-      const result = Math.floor(this.flat.price / this.flat.square)
-      return this.formatPrice(result)
     }
   }
 };
@@ -61,7 +61,7 @@ export default {
   }
   &-number{
     position: absolute;
-    z-index: 2;
+    z-index: 1;
     top: 0;
     right: 0;
     padding: 5px 8px;

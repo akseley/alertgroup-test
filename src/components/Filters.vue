@@ -4,7 +4,7 @@
       <v-col>
         <div>Комнаты</div>
         <v-btn-toggle v-model="filters.size" color="green lighten-2">
-          <v-btn v-for="(size, index) in sizeGroup" :key="index" :value="size">
+          <v-btn v-for="size in sizeGroup" :key="size" :value="size">
             {{ size }}
           </v-btn>
         </v-btn-toggle>
